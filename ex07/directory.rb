@@ -20,7 +20,7 @@ def input_students
   while !name.empty? do
     # add student hash to array
     puts "Cohort (November used as default if not entered):"
-    cohort = gets.chomp
+    cohort = gets.chomp.to_sym
     puts "Country of birth:"
     country = gets.chomp
     puts "Height (metres):"
@@ -57,7 +57,7 @@ def print_header
   puts "-------------".center(70)
 end
 
-def print(students)
+def print_details(students)
   students.each_new(students) do |student, index|
     puts "#{index+1}. #{student[:name]} (#{student[:cohort].capitalize} cohort) \
 is from #{student[:country]}, #{student[:height]}m tall and enjoys #{student[:hobbies]}."
@@ -71,5 +71,5 @@ end
 
 students = input_students
 print_header
-print(students)
+print_details(students)
 print_footer(students)
