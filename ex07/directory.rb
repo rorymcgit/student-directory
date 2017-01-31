@@ -11,14 +11,12 @@ end
 def input_students
   puts "Please enter details of the students."
   puts "To finish, just hit return twice"
-  # create empty array
   students = []
   # get the first name
   puts "Student name:"
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
-    # add student hash to array
     puts "Cohort (November used as default if not entered):"
     cohort = gets.chomp.to_sym
     puts "Country of birth:"
@@ -27,10 +25,11 @@ def input_students
     height = gets.chomp
     puts "And the student's hobbies? Comma separated please:"
     hobbies = gets.chomp
-    if !cohort.empty?
+    # add student hash to array
+    if cohort.empty?
       students << {
       name: name,
-      cohort: cohort,
+      cohort: :november,
       country: country,
       height: height,
       hobbies: hobbies,
@@ -38,7 +37,7 @@ def input_students
     else
         students << {
         name: name,
-        cohort: :november,
+        cohort: cohort,
         country: country,
         height: height,
         hobbies: hobbies,
@@ -60,7 +59,7 @@ end
 def print_details(students)
   students.each_new(students) do |student, index|
     puts "#{index+1}. #{student[:name]} (#{student[:cohort].capitalize} cohort) \
-is from #{student[:country]}, #{student[:height]}m tall and enjoys #{student[:hobbies]}."
+is from #{student[:country]}, #{student[:height].to_f}m tall and enjoys #{student[:hobbies]}."
   end
 end
 
