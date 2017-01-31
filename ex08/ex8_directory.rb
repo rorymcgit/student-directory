@@ -36,7 +36,8 @@ def input_students
     height: height,
     hobbies: hobbies,
     }
-    # add student hash to array
+    # below catches typos quite thoroughly. If no month can be assigned,
+    # the input given isn taken and converted to its own symbol
     if cohort.downcase.include?("no") || cohort.downcase.include?("v")
       students[index][:cohort] = :november
     elsif cohort.downcase.include?("d") || cohort.downcase.include?("ec")
