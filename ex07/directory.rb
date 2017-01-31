@@ -17,8 +17,8 @@ def input_students
   name = gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
-    puts "Cohort (November used as default if not entered):"
-    cohort = gets.chomp.to_sym
+    puts "Cohort month (November used as default if not entered):"
+    cohort = gets.chomp
     puts "Country of birth:"
     country = gets.chomp
     puts "Height (metres):"
@@ -26,7 +26,7 @@ def input_students
     puts "And the student's hobbies? Comma separated please:"
     hobbies = gets.chomp
     # add student hash to array
-    if cohort.empty?
+    if cohort.empty? || cohort.downcase.include?("no") || cohort.downcase.include?("v")
       students << {
       name: name,
       cohort: :november,
@@ -37,7 +37,7 @@ def input_students
     else
         students << {
         name: name,
-        cohort: cohort,
+        cohort: cohort.to_sym,
         country: country,
         height: height,
         hobbies: hobbies,
