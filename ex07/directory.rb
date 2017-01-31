@@ -34,14 +34,103 @@ def input_students
       height: height,
       hobbies: hobbies,
     }
+    elsif cohort.downcase.include?("d") || cohort.downcase.include?("ec")
+      students << {
+      name: name,
+      cohort: :december,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("j") && cohort.downcase.include?("a")
+      students << {
+      name: name,
+      cohort: :january,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("f")
+      students << {
+      name: name,
+      cohort: :february,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("c") && cohort.downcase.include?("h")
+      students << {
+      name: name,
+      cohort: :march,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("ap") && cohort.downcase.include?("r")
+      students << {
+      name: name,
+      cohort: :april,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("m") && cohort.downcase.include?("y")
+      students << {
+      name: name,
+      cohort: :may,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("j") && cohort.downcase.include?("u") &&
+    cohort.downcase.include?("e")
+      students << {
+      name: name,
+      cohort: :june,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("j") && cohort.downcase.include?("l")
+      students << {
+      name: name,
+      cohort: :july,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("a") && cohort.downcase.include?("g")
+      students << {
+      name: name,
+      cohort: :august,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("s") || cohort.downcase.include?("pt")
+      students << {
+      name: name,
+      cohort: :september,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
+    elsif cohort.downcase.include?("o") && cohort.downcase.include?("t")
+      students << {
+      name: name,
+      cohort: :october,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
     else
-        students << {
-        name: name,
-        cohort: cohort.to_sym,
-        country: country,
-        height: height,
-        hobbies: hobbies,
-      }
+      students << {
+      name: name,
+      cohort: cohort.to_sym,
+      country: country,
+      height: height,
+      hobbies: hobbies,
+    }
     end
     puts "Now we have #{students.count} students"
     puts "Next student's name please:"
