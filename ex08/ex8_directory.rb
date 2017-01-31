@@ -8,12 +8,6 @@ class Array
   end
 end
 
-class Hash
-  def hmap(&block)
-    Hash[self.map {|key, value| block.call(key, value) }]
-  end
-end
-
 def input_students
   puts "Please enter details of the students."
   puts "To finish, just hit return twice"
@@ -76,19 +70,26 @@ def input_students
     name = gets.chomp
     index += 1
   end
+  puts "...end of user input.".rjust(100)
   #return array of students
   students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(80)
-  puts "-------------".center(80)
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
 end
 
 def print_details(students)
-  students.each_new(students) do |student, index|
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort].capitalize} cohort) \
-is from #{student[:country]}, #{student[:height].to_f}m tall and enjoys #{student[:hobbies]}."
+  cohorts = students.map { |student| student[:cohort] }
+  cou = 0
+  while cou < cohorts.length
+    puts cohorts[cou].to_s.capitalize + " students:"
+    puts "\tName: #{students[cou][:name]}"
+    puts "\tCountry: #{students[cou][:country]}"
+    puts "\tHeight: #{students[cou][:height]}"
+    puts "\tHobbies: #{students[cou][:hobbies]}"
+    cou +=1
   end
 end
 
