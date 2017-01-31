@@ -20,6 +20,7 @@ def input_students
   while !name.empty? do
     puts "Cohort month:"
     cohort = gets.chomp
+    # require cohort input
     while cohort.empty? do
       puts "Please re-enter cohort:"
       cohort = gets.chomp
