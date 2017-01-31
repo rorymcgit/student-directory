@@ -83,6 +83,7 @@ end
 
 def print_details(students)
   cohorts = students.map { |student| student[:cohort] }
+  # cohorts.sort_by! { |symb| symb.to_s } # NEED TO SORT BY MONTH NOT ABC, BUT HOOW??
   cou = 0
   while cou < cohorts.length
     puts cohorts[cou].to_s.capitalize + " students:"
@@ -95,7 +96,13 @@ def print_details(students)
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students."
+  if names.count == 1
+    puts "Overall, we have just the #{names.count} great student."
+  elsif names.count > 1
+    puts "Overall, we have #{names.count} great students."
+  else
+    puts "No students yet..."
+  end
 end
 
 
