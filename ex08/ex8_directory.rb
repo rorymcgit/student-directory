@@ -8,6 +8,12 @@ class Array
   end
 end
 
+class Hash
+  def hmap(&block)
+    Hash[self.map {|key, value| block.call(key, value) }]
+  end
+end
+
 def input_students
   puts "Please enter details of the students."
   puts "To finish, just hit return twice"
@@ -18,8 +24,12 @@ def input_students
   index = 0
   # while the name is not empty, repeat this code
   while !name.empty? do
-    puts "Cohort month (November used as default if not entered):"
+    puts "Cohort month:"
     cohort = gets.chomp
+    while cohort.empty? do
+      puts "Please re-enter cohort:"
+      cohort = gets.chomp
+     end
     puts "Country of birth:"
     country = gets.chomp
     puts "Height (metres):"
@@ -33,7 +43,7 @@ def input_students
     hobbies: hobbies,
     }
     # add student hash to array
-    if cohort.empty? || cohort.downcase.include?("no") || cohort.downcase.include?("v")
+    if cohort.downcase.include?("no") || cohort.downcase.include?("v")
       students[index][:cohort] = :november
     elsif cohort.downcase.include?("d") || cohort.downcase.include?("ec")
       students[index][:cohort] = :december
@@ -71,19 +81,12 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy".center(70)
-  puts "-------------".center(70)
+  puts "The students of Villains Academy".center(80)
+  puts "-------------".center(80)
 end
 
 def print_details(students)
-  nov = students.map { |item| item if item[:cohort] == :november }
-  puts nov
-
-  dec = students.map { |item| item if item[:cohort] == :december }
-  puts dec
-
   students.each_new(students) do |student, index|
-    # puts student[:cohort]
     puts "#{index+1}. #{student[:name]} (#{student[:cohort].capitalize} cohort) \
 is from #{student[:country]}, #{student[:height].to_f}m tall and enjoys #{student[:hobbies]}."
   end
