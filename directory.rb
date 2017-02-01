@@ -1,3 +1,5 @@
+@students = []
+
 class Array
   def each_new(arr)
     count = 0
@@ -8,33 +10,41 @@ class Array
   end
 end
 
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  print_students_list
+  print_footer
+end
+
 def interactive_menu
-  students = []
   loop do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-    selection = gets.chomp
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print_details(students)
-      print_footer(students)
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean, try again"
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean, try again"
+  end
+end
 
 def input_students
   puts "Please enter details of the students."
   puts "To finish, just hit return twice"
-  students = []
   # get the first name
   puts "Student name:"
   name = gets.gsub(/ *\n+/, "")
@@ -56,21 +66,20 @@ def input_students
     height = gets.gsub(/ *\n+/, "")
     puts "And the student's hobbies? Comma separated please:"
     hobbies = gets.gsub(/ *\n+/, "")
-    students << {
+    @students << {
     name: name,
     country: country,
     height: height,
     hobbies: hobbies,
     cohort: cohort,
     }
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{@students.count} students"
     puts "Next student's name please:"
     name = gets.gsub(/ *\n+/, "")
     index += 1
   end
   puts "...end of user input.".rjust(100)
   #return array of students
-  students
 end
 
 def print_header
@@ -78,33 +87,28 @@ def print_header
   puts "-------------".center(100)
 end
 
-def print_details(students)
-  cohorts = students.map { |student| student[:cohort] }
+def print_students_list
+  cohorts = @students.map { |student| student[:cohort] }
   cou = 0
   while cou < cohorts.length
     puts cohorts[cou].to_s.capitalize + " students:"
-    puts "\tName: #{students[cou][:name]}"
-    puts "\tCountry: #{students[cou][:country]}"
-    puts "\tHeight: #{students[cou][:height]}"
-    puts "\tHobbies: #{students[cou][:hobbies]}"
+    puts "\tName: #{@students[cou][:name]}"
+    puts "\tCountry: #{@students[cou][:country]}"
+    puts "\tHeight: #{@students[cou][:height]}"
+    puts "\tHobbies: #{@students[cou][:hobbies]}"
     cou +=1
   end
 end
 
-def print_footer(names)
-  if names.count > 1
-    puts "Overall, we have #{names.count} great students."
-  else names.count == 1
-    puts "Overall, we have just the #{names.count} great student."
+def print_footer
+  if @students.count > 1
+    puts "Overall, we have #{@students.count} great students."
+  elsif @students.count == 1
+    puts "Overall, we have just the #{@students.count} great student."
+  else
+    puts "No students at the academy"
   end
 end
 
 
 interactive_menu
-if students.length > 0
-  print_header
-  print_details(students)
-  print_footer(students)
-else
-  puts "No students at the academy"
-end
