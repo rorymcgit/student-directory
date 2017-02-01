@@ -14,22 +14,23 @@ def input_students
   students = []
   # get the first name
   puts "Student name:"
-  name = gets.chomp
+  name = gets.gsub(/ *\n+/, "")
   index = 0
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "Cohort month:"
-    cohort = gets.chomp
+    cohort = gets.gsub(/ *\n+/, "")
+    # require cohort input
     while cohort.empty? do
       puts "Please re-enter cohort:"
-      cohort = gets.chomp
+      cohort = gets.gsub(/ *\n+/, "")
      end
     puts "Country of birth:"
-    country = gets.chomp
+    country = gets.gsub(/ *\n+/, "")
     puts "Height (metres):"
-    height = gets.chomp
+    height = gets.gsub(/ *\n+/, "")
     puts "And the student's hobbies? Comma separated please:"
-    hobbies = gets.chomp
+    hobbies = gets.gsub(/ *\n+/, "")
     students << {
     name: name,
     country: country,
@@ -68,7 +69,7 @@ def input_students
     end
     puts "Now we have #{students.count} students"
     puts "Next student's name please:"
-    name = gets.chomp
+    name = gets.gsub(/ *\n+/, "")
     index += 1
   end
   puts "...end of user input.".rjust(100)
@@ -96,10 +97,10 @@ def print_details(students)
 end
 
 def print_footer(names)
-  if names.count == 1
-    puts "Overall, we have just the #{names.count} great student."
-  elsif names.count > 1
+  if names.count > 1
     puts "Overall, we have #{names.count} great students."
+  elsif names.count == 1
+    puts "Overall, we have just the #{names.count} great student."
   else
     puts "No students yet..."
   end
