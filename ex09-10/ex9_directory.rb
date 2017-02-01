@@ -20,8 +20,10 @@ def input_students
   while !name.empty? do
     puts "Cohort month:"
     cohort = gets.gsub(/ *\n+/, "")
-    # require cohort input
-    while cohort.empty? do
+    cohort_months = [:january, :february, :march, :april, :may, :june, :july,
+                    :august, :september, :october, :december]
+    # require valid cohort month
+    while !cohort_months.include? cohort.downcase.to_sym do
       puts "Please re-enter cohort:"
       cohort = gets.gsub(/ *\n+/, "")
      end
@@ -36,37 +38,8 @@ def input_students
     country: country,
     height: height,
     hobbies: hobbies,
+    cohort: cohort,
     }
-    # below catches typos quite thoroughly. If no month can be assigned,
-    # the input given is taken and converted to its own symbol
-    if cohort.downcase.include?("no") || cohort.downcase.include?("v")
-      students[index][:cohort] = :november
-    elsif cohort.downcase.include?("d") || cohort.downcase.include?("ec")
-      students[index][:cohort] = :december
-    elsif cohort.downcase.include?("j") && cohort.downcase.include?("a")
-      students[index][:cohort] = :january
-    elsif cohort.downcase.include?("f")
-      students[index][:cohort] = :february
-    elsif cohort.downcase.include?("c") && cohort.downcase.include?("h")
-      students[index][:cohort] = :march
-    elsif cohort.downcase.include?("ap") && cohort.downcase.include?("r")
-      students[index][:cohort] = :april
-    elsif cohort.downcase.include?("m") && cohort.downcase.include?("y")
-      students[index][:cohort] = :may
-    elsif cohort.downcase.include?("j") && cohort.downcase.include?("u") &&
-    cohort.downcase.include?("e")
-      students[index][:cohort] = :june
-    elsif cohort.downcase.include?("j") && cohort.downcase.include?("l")
-      students[index][:cohort] = :july
-    elsif cohort.downcase.include?("a") && cohort.downcase.include?("g")
-      students[index][:cohort] = :august
-    elsif cohort.downcase.include?("s") || cohort.downcase.include?("pt")
-      students[index][:cohort] = :september
-    elsif cohort.downcase.include?("o") && cohort.downcase.include?("t")
-      students[index][:cohort] = :october
-    else
-      students[index][:cohort] = cohort.to_sym
-    end
     puts "Now we have #{students.count} students"
     puts "Next student's name please:"
     name = gets.gsub(/ *\n+/, "")
