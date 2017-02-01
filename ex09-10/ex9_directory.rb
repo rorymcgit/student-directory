@@ -26,7 +26,7 @@ def input_students
     while !cohort_months.include? cohort.downcase.to_sym do
       puts "Please re-enter cohort:"
       cohort = gets.gsub(/ *\n+/, "")
-     end
+    end
     puts "Country of birth:"
     country = gets.gsub(/ *\n+/, "")
     puts "Height (metres):"
@@ -57,7 +57,6 @@ end
 
 def print_details(students)
   cohorts = students.map { |student| student[:cohort] }
-  # cohorts.sort_by! { |symb| symb.to_s } # NEED TO SORT BY MONTH NOT ABC, BUT HOOW??
   cou = 0
   while cou < cohorts.length
     puts cohorts[cou].to_s.capitalize + " students:"
@@ -72,15 +71,17 @@ end
 def print_footer(names)
   if names.count > 1
     puts "Overall, we have #{names.count} great students."
-  elsif names.count == 1
+  else names.count == 1
     puts "Overall, we have just the #{names.count} great student."
-  else
-    puts "No students yet..."
   end
 end
 
 
 students = input_students
-print_header
-print_details(students)
-print_footer(students)
+if students.length > 0
+  print_header
+  print_details(students)
+  print_footer(students)
+else
+  puts "No students at the academy"
+end

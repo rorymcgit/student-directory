@@ -1,42 +1,86 @@
+class Array
+  def each_new(arr)
+    count = 0
+    while count < arr.length
+      yield arr[count], count
+      count += 1
+    end
+  end
+end
+
 def input_students
-  puts "Please enter the names of the students"
+  puts "Please enter details of the students."
   puts "To finish, just hit return twice"
-  # create an empty array
   students = []
   # get the first name
-  name = gets.chomp
+  puts "Student name:"
+  name = gets.gsub(/ *\n+/, "")
+  index = 0
   # while the name is not empty, repeat this code
   while !name.empty? do
-  # add the student hash to the array
-  students << {name: name, cohort: :november}
-  puts "Now we have #{students.count} students"
-  # get another name from the user
-  name = gets.chomp
+    puts "Cohort month:"
+    cohort = gets.gsub(/ *\n+/, "")
+    cohort_months = [:january, :february, :march, :april, :may, :june, :july,
+                    :august, :september, :october, :december]
+    # require valid cohort month
+    while !cohort_months.include? cohort.downcase.to_sym do
+      puts "Please re-enter cohort:"
+      cohort = gets.gsub(/ *\n+/, "")
+    end
+    puts "Country of birth:"
+    country = gets.gsub(/ *\n+/, "")
+    puts "Height (metres):"
+    height = gets.gsub(/ *\n+/, "")
+    puts "And the student's hobbies? Comma separated please:"
+    hobbies = gets.gsub(/ *\n+/, "")
+    students << {
+    name: name,
+    country: country,
+    height: height,
+    hobbies: hobbies,
+    cohort: cohort,
+    }
+    puts "Now we have #{students.count} students"
+    puts "Next student's name please:"
+    name = gets.gsub(/ *\n+/, "")
+    index += 1
   end
-  # return the array of students
+  puts "...end of user input.".rjust(100)
+  #return array of students
   students
 end
 
 def print_header
-  puts "The students of my cohort at Makers Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
 end
 
-def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+def print_details(students)
+  cohorts = students.map { |student| student[:cohort] }
+  cou = 0
+  while cou < cohorts.length
+    puts cohorts[cou].to_s.capitalize + " students:"
+    puts "\tName: #{students[cou][:name]}"
+    puts "\tCountry: #{students[cou][:country]}"
+    puts "\tHeight: #{students[cou][:height]}"
+    puts "\tHobbies: #{students[cou][:hobbies]}"
+    cou +=1
   end
 end
 
 def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+  if names.count > 1
+    puts "Overall, we have #{names.count} great students."
+  else names.count == 1
+    puts "Overall, we have just the #{names.count} great student."
+  end
 end
 
 
 students = input_students
 if students.length > 0
   print_header
-  print(students)
+  print_details(students)
   print_footer(students)
 else
   puts "No students at the academy"
