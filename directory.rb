@@ -116,8 +116,13 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, country, height, hobbies = line.chomp.split(',')
-      @students << {name: name, cohort: cohort.to_sym, country: country,
-                    height: height, hobbies: hobbies}
+      @students << {
+        name: name,
+        cohort: cohort.to_sym,
+        country: country,
+        height: height,
+        hobbies: hobbies
+      }
   end
   file.close
 end
