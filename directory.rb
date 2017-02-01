@@ -47,25 +47,25 @@ def input_students
   puts "To finish, just hit return twice"
   # get the first name
   puts "Student name:"
-  name = gets.gsub(/ *\n+/, "")
+  name = gets.chomp
   index = 0
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "Cohort month:"
-    cohort = gets.gsub(/ *\n+/, "")
+    cohort = gets.chomp
     cohort_months = [:january, :february, :march, :april, :may, :june, :july,
                     :august, :september, :october, :december]
     # require valid cohort month
     while !cohort_months.include? cohort.downcase.to_sym do
       puts "Please re-enter cohort:"
-      cohort = gets.gsub(/ *\n+/, "")
+      cohort = gets.chomp
     end
     puts "Country of birth:"
-    country = gets.gsub(/ *\n+/, "")
+    country = gets.chomp
     puts "Height (metres):"
-    height = gets.gsub(/ *\n+/, "")
+    height = gets.chomp
     puts "And the student's hobbies? Comma separated please:"
-    hobbies = gets.gsub(/ *\n+/, "")
+    hobbies = gets.chomp
     @students << {
     name: name,
     country: country,
@@ -75,7 +75,7 @@ def input_students
     }
     puts "Now we have #{@students.count} students"
     puts "Next student's name please:"
-    name = gets.gsub(/ *\n+/, "")
+    name = gets.chomp
     index += 1
   end
   puts "...end of user input.".rjust(100)
