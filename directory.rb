@@ -38,8 +38,7 @@ def process(selection)
     save_students
   when "4"
     puts "You have selected '4: LOAD FROM CSV'"
-    # custom_load
-    load_students
+    custom_load
   when "9"
     puts "You have selected '9: EXIT PROGRAM'"
     puts "Goodbye!"
@@ -93,35 +92,31 @@ def push_to_array(name, cohort, country, height, hobbies)
 end
 
 def try_load_students
-  filename = ARGV.first
-  if File.exist?(filename.to_s)
-    load_students(filename)
-  elsif File.exist?("students.csv")
-    puts "No file specified but students.csv found in directory."
-    filename = "students.csv"
-    load_students(filename)
-  else
-    puts "Sorry filename #{filename} not entered or doesn't exist."
-    puts "Setting up new directory."
-    interactive_menu
-  end
+  filename = ARGV.first || "students.csv"
+  load_students(filename)
 end
 
-#TRYING TO
-# def custom_load
-#   puts "Please enter filename to load..."
-#   load_name = STDIN.gets.chomp
-# end
+def custom_load
+  puts "Please enter filename to load..."
+  load_name = STDIN.gets.chomp
+  load_students(load_name)
+end
 
 def load_students(filename = "students.csv")
-  # HOW TO BYPASS FILENAME IF PROVIDED WITH ARGV FILENAME??
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, country, height, hobbies = line.chomp.split(',')
-    push_to_array(name, cohort, country, height, hobbies)
+  if File.exists?(filename)
+    file = File.open(filename, "r")
+    count = 0
+    file.readlines.each do |line|
+      name, cohort, country, height, hobbies = line.chomp.split(',')
+      push_to_array(name, cohort, country, height, hobbies)
+      count += 1
+    end
+    file.close
+    puts "#{count} students loaded from #{filename}"
+  else
+    puts "no file found"
+    interactive_menu
   end
-  file.close
-  puts "#{@students.count} students loaded from #{filename}"
 end
 
 def show_students
