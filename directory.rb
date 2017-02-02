@@ -73,7 +73,7 @@ def input_students
     puts "And the student's favourite hobby?"
     hobbies = STDIN.gets.chomp
     push_to_array(name, cohort, country, height, hobbies)
-    puts "Now we have #{@students.count} students"
+    puts "Now we have #{@students.count} student" + plural + "."
     puts "Next student's name please:"
     name = STDIN.gets.chomp
     index += 1
@@ -151,7 +151,7 @@ def print_students_list
   cohorts = @students.map { |student| student[:cohort] }
   cou = 0
   while cou < cohorts.length
-    puts cohorts[cou].to_s.capitalize + " students:"
+    puts cohorts[cou].to_s.capitalize + " student" + plural + ":"
     puts "\tName: #{@students[cou][:name]}"
     puts "\tCountry: #{@students[cou][:country]}"
     puts "\tHeight: #{@students[cou][:height]}"
@@ -160,11 +160,13 @@ def print_students_list
   end
 end
 
+def plural(count = @students.count)
+  count > 1 ? "s" : ""
+end
+
 def print_footer
-  if @students.count > 1
-    puts "Overall, we have #{@students.count} great students."
-  elsif @students.count == 1
-    puts "Overall, we have just the #{@students.count} great student."
+  if @students.count > 0
+    puts "Overall, we have #{@students.count} great student" + plural + "."
   else
     puts "\nNo students at the academy"
   end
