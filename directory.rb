@@ -11,7 +11,7 @@ class Array
 end
 
 def print_menu
-  puts "1. Input the students"
+  puts "\n1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
@@ -28,17 +28,23 @@ end
 def process(selection)
   case selection
   when "1"
+    puts "You have selected '1: INPUT'"
     input_students
   when "2"
+    puts "You have selected '2: SHOW STUDENTS'"
     show_students
   when "3"
+    puts "You have selected '3: SAVE TO CSV'"
     save_students
   when "4"
+    puts "You have selected '4: LOAD FROM CSV'"
     load_students
   when "9"
+    puts "You have selected '9: EXIT PROGRAM'"
+    puts "Goodbye!"
     exit
   else
-    puts "I don't know what you mean, try again"
+    puts "I don't know what you mean, try again:"
   end
 end
 
@@ -93,6 +99,7 @@ def try_load_students
     puts "Loaded #{@students.count} from #{filename}"
     # puts @students
   elsif File.exist?("students.csv")
+    puts "No file specified so CSV to load set to students.csv"
     filename = "students.csv"
     load_students(filename)
   else
@@ -109,6 +116,7 @@ def load_students(filename = "students.csv")
     push_to_array(name, cohort, country, height, hobbies)
   end
   file.close
+  puts "#{@students.count} students loaded from #{filename}"
 end
 
 def show_students
@@ -127,6 +135,7 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Successfully saved to students.csv"
 end
 
 def print_header
