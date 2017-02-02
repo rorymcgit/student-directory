@@ -1,3 +1,5 @@
+require 'CSV'
+
 @students = []
 
 class Array
@@ -58,11 +60,11 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     puts "Cohort month:"
-    cohort = STDIN.gets.chomp
+    cohort = STDIN.gets.chomp.downcase
     cohort_months = [:january, :february, :march, :april, :may, :june, :july,
                     :august, :september, :october, :november, :december]
     # require valid cohort month
-    while !cohort_months.include? cohort.downcase.to_sym do
+    while !cohort_months.include? cohort.to_sym do
       puts "Please re-enter cohort:"
       cohort = STDIN.gets.chomp
     end
@@ -150,7 +152,7 @@ end
 def print_students_list
   cohort_list = @students.group_by{|student| student[:cohort]}
   cohort_list.keys.each do |key|
-    puts "#{key} student#{plural(cohort_list[key].count)}:"
+    puts "#{key.capitalize} student#{plural(cohort_list[key].count)}:"
     cohort_list[key].each do |student|
       puts "\tName: #{student[:name]}"
       puts "\tCountry: #{student[:country]}"
