@@ -102,13 +102,12 @@ end
 
 def try_load_students
   filename = ARGV.first # first argument from command line
-  return if filename.nil? # exits this method if no filename given
-  if File.exist?(filename)
+  if File.exist?(filename.to_s)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else
-    puts "Sorry, #{filename} doesn't exit."
-    exit
+    filename = "students.csv"
+    load_students(filename)
   end
 end
 
