@@ -13,8 +13,8 @@ end
 def print_menu
   puts "\n1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the directory to csv"
+  puts "4. Load existing directory"
   puts "9. Exit"
 end
 
@@ -38,6 +38,7 @@ def process(selection)
     save_students
   when "4"
     puts "You have selected '4: LOAD FROM CSV'"
+    # custom_load
     load_students
   when "9"
     puts "You have selected '9: EXIT PROGRAM'"
@@ -79,7 +80,6 @@ def input_students
     index += 1
   end
   puts "...end of user input.".rjust(100)
-  #return array of students
 end
 
 def push_to_array(name, cohort, country, height, hobbies)
@@ -93,23 +93,28 @@ def push_to_array(name, cohort, country, height, hobbies)
 end
 
 def try_load_students
-  filename = ARGV.first # first argument from command line
+  filename = ARGV.first
   if File.exist?(filename.to_s)
     load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-    # puts @students
   elsif File.exist?("students.csv")
-    puts "No file specified so CSV to load set to students.csv"
+    puts "No file specified but students.csv found in directory."
     filename = "students.csv"
     load_students(filename)
   else
-    puts "Sorry #{filename} not entered or doesn't exist."
+    puts "Sorry filename #{filename} not entered or doesn't exist."
     puts "Setting up new directory."
     interactive_menu
   end
 end
 
+#TRYING TO
+# def custom_load
+#   puts "Please enter filename to load..."
+#   load_name = STDIN.gets.chomp
+# end
+
 def load_students(filename = "students.csv")
+  # HOW TO BYPASS FILENAME IF PROVIDED WITH ARGV FILENAME??
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort, country, height, hobbies = line.chomp.split(',')
@@ -126,8 +131,10 @@ def show_students
 end
 
 def save_students
+  puts "Save as..."
+  save_name = STDIN.gets.chomp
   # open file for writing
-  file = File.open("students.csv", "w")
+  file = File.open(save_name, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:country],
                     student[:height], student[:hobbies]]
@@ -135,12 +142,14 @@ def save_students
     file.puts csv_line
   end
   file.close
-  puts "Successfully saved to students.csv"
+  puts "Successfully saved to #{save_name}"
 end
 
 def print_header
-  puts "The students of Villains Academy".center(100)
-  puts "-------------".center(100)
+  if @students.length > 0
+    puts "The students of Villains Academy".center(100)
+    puts "-------------".center(100)
+  end
 end
 
 def print_students_list
@@ -162,7 +171,7 @@ def print_footer
   elsif @students.count == 1
     puts "Overall, we have just the #{@students.count} great student."
   else
-    puts "No students at the academy"
+    puts "\nNo students at the academy"
   end
 end
 
