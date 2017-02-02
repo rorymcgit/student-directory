@@ -54,7 +54,7 @@ def input_students
     puts "Cohort month:"
     cohort = STDIN.gets.chomp
     cohort_months = [:january, :february, :march, :april, :may, :june, :july,
-                    :august, :september, :october, :december]
+                    :august, :september, :october, :november, :december]
     # require valid cohort month
     while !cohort_months.include? cohort.downcase.to_sym do
       puts "Please re-enter cohort:"
@@ -64,15 +64,9 @@ def input_students
     country = STDIN.gets.chomp
     puts "Height (metres):"
     height = STDIN.gets.chomp
-    puts "And the student's hobbies? Comma separated please:"
+    puts "And the student's favourite hobby?"
     hobbies = STDIN.gets.chomp
-    @students << {
-    name: name,
-    country: country,
-    height: height,
-    hobbies: hobbies,
-    cohort: cohort,
-    }
+    push_to_array(name, cohort, country, height, hobbies)
     puts "Now we have #{@students.count} students"
     puts "Next student's name please:"
     name = STDIN.gets.chomp
@@ -80,6 +74,41 @@ def input_students
   end
   puts "...end of user input.".rjust(100)
   #return array of students
+end
+
+def push_to_array(name, cohort, country, height, hobbies)
+  @students << {
+  name: name,
+  cohort: cohort.to_sym,
+  country: country,
+  height: height,
+  hobbies: hobbies,
+  }
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from command line
+  if File.exist?(filename.to_s)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+    # puts @students
+  elsif File.exist?("students.csv")
+    filename = "students.csv"
+    load_students(filename)
+  else
+    puts "Sorry #{filename} not entered or doesn't exist."
+    puts "Setting up new directory."
+    interactive_menu
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
+  file.readlines.each do |line|
+    name, cohort, country, height, hobbies = line.chomp.split(',')
+    push_to_array(name, cohort, country, height, hobbies)
+  end
+  file.close
 end
 
 def show_students
@@ -96,32 +125,6 @@ def save_students
                     student[:height], student[:hobbies]]
     csv_line = student_data.join(",")
     file.puts csv_line
-  end
-  file.close
-end
-
-def try_load_students
-  filename = ARGV.first # first argument from command line
-  if File.exist?(filename.to_s)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else
-    filename = "students.csv"
-    load_students(filename)
-  end
-end
-
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, cohort, country, height, hobbies = line.chomp.split(',')
-      @students << {
-        name: name,
-        cohort: cohort.to_sym,
-        country: country,
-        height: height,
-        hobbies: hobbies
-      }
   end
   file.close
 end
