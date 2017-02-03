@@ -131,14 +131,13 @@ def save_students
   puts "Save as..."
   save_name = STDIN.gets.chomp
   # open file for writing
-  file = File.open(save_name, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort], student[:country],
-                    student[:height], student[:hobbies]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  CSV.open(save_name, "wb") do |csv|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort], student[:country],
+                      student[:height], student[:hobbies]]
+      csv << student_data
+    end
   end
-  file.close
   puts "Successfully saved to #{save_name}"
 end
 
