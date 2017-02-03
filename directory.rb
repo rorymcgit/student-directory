@@ -2,16 +2,6 @@ require 'CSV'
 
 @students = []
 
-class Array
-  def each_new(arr)
-    count = 0
-    while count < arr.length
-      yield arr[count], count
-      count += 1
-    end
-  end
-end
-
 def print_menu
   puts "\n1. Input the students"
   puts "2. Show the students"
