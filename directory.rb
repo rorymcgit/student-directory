@@ -106,15 +106,15 @@ end
 
 def load_students(filename = "students.csv")
   if File.exists?(filename)
-    File.open(filename, "r") do |file|
-      count = 0
-      file.readlines.each do |line|
-        name, cohort, country, height, hobbies = line.chomp.split(',')
-        push_to_array(name, cohort, country, height, hobbies)
-        count += 1
-      end
-    puts "#{count} students loaded from #{filename}"
+    count = 0
+    CSV.open(filename, "r") do |file|
+      file.readlines.each do |student_array|
+      name, cohort, country, height, hobbies = student_array
+      push_to_array(name, cohort, country, height, hobbies)
+      count += 1
+    end
   end
+    puts "#{count} students loaded from #{filename}"
   else
     puts "no file found"
     interactive_menu
@@ -131,14 +131,14 @@ def save_students
   puts "Save as..."
   save_name = STDIN.gets.chomp
   # open file for writing
-  File.open(save_name, "w") do |file|
+  file = File.open(save_name, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort], student[:country],
                     student[:height], student[:hobbies]]
     csv_line = student_data.join(",")
     file.puts csv_line
-    end
   end
+  file.close
   puts "Successfully saved to #{save_name}"
 end
 
